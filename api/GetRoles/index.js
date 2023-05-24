@@ -17,27 +17,19 @@ module.exports = async function (context, req) {
     }
 
     context.res.json({
-        roles,
-        roleGroupMappings,
-        isUserInGroup: await isUserInGroup(roleGroupMappings['onliz'], user.accessToken)
+        roles
     });
 }
 
 async function isUserInGroup(groupId, bearerToken) {
     const url = new URL('https://graph.microsoft.com/v1.0/me/memberOf');
-    console.log(`Checking if user is in group ${groupId}`);
-    console.log(`Bearer token: ${bearerToken}`);
-    console.log(`URL: ${url}`);
     url.searchParams.append('$filter', `id eq '${groupId}'`);
-    console.log(`searchparams : ${url.searchParams.append('$filter', `id eq '${groupId}'`)}`);
     const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${bearerToken}`
         },
     });
-
-    console.log(`Response: ${response}`);
 
     if (response.status !== 200) {
         return false;

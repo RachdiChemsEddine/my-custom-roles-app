@@ -6,7 +6,7 @@
         },
         {
             "route": "/authenticated/*",
-            "allowedRoles": [ "reader" ]
+            "allowedRoles": [ "onliz" ]
         }
     ],
     "auth": {
